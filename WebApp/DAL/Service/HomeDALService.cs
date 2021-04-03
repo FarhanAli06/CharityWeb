@@ -7,13 +7,9 @@ namespace DAL.Service
 {
     public class HomeDALService
     {
-        //private readonly IHomeDALService _homeDALService;
+        private readonly IHomeDALService _homeDALService;
 
-        //private readonly ApplicationDbContext _context;
-        //public HomeDALService(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //}
+      
         #region Home
         public async Task<WeatherForecast> CallApiMethodAsync()
         {

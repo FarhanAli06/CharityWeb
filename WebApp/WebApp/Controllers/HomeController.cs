@@ -9,14 +9,21 @@ namespace WebApp.Controllers
     {
         //private readonly ILogger<HomeController> _logger;
         private IHomeService _homeService;
-        public HomeController(IHomeService homeService)
+        private IAdminService _adminService;
+        //ApplicationDbContext _context;
+
+        public HomeController(IHomeService homeService, IAdminService adminService)
         {
             _homeService = homeService;
+            _adminService = adminService;
+            //    _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = await _homeService.CallApiMethodAsync();
+            //var client = await _context.Content.FirstOrDefaultAsync();
+            var result = _homeService.CallApiMethodAsync();
+            var contentResult = await _adminService.GetContent();
             return View();
 
             //return PartialView("_Index");
