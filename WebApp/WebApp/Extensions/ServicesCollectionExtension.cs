@@ -1,13 +1,9 @@
-﻿using System;
-using BusinessLogic;
-using BusinessLogic.IService;
-using Common.Helper;
+﻿using BusinessLogic.IService;
+using BusinessLogic.Service;
+using DAL.IService;
+using DAL.Service;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Model.Models;
-using WebApp.Context;
 
 namespace SQ.Senior.Quoting.External.Services
 {
@@ -16,7 +12,11 @@ namespace SQ.Senior.Quoting.External.Services
         public static IServiceCollection AddInfrastructurServices(this IServiceCollection services)
         {
             services.AddScoped<IHomeService, HomeService>();
-            services.AddScoped<IHTTPClientHelper, HTTPClientWrapper>();
+            services.AddScoped<IAdminService, AdminService>();
+
+            //DalServices
+            services.AddScoped<IAdminDALService, AdminDALService>();
+
             return services;
         }
         public static IServiceCollection AddHttpContext(this IServiceCollection services)
@@ -24,26 +24,21 @@ namespace SQ.Senior.Quoting.External.Services
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             return services;
         }
-        public static IServiceCollection AddCustomConfiguration(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<ConfigurationSettings>(configuration.GetSection("ConfigurationSettings"));
-            return services;
-        }
 
-        public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContextPool<ApplicationDbContext>(item => item.UseSqlServer(configuration.GetConnectionString("myconn")));
-            return services;
-        }
+        //public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
+        //{
+        //    services.AddDbContextPool<ApplicationDbContext>(item => item.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        //    return services;
+        //}
 
-        public static IServiceCollection AddApiClient(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddHttpClient<IHTTPClientHelper, HTTPClientWrapper>(client =>
-            {
-                client.BaseAddress = new Uri(configuration.GetValue<string>("ConfigurationSettings:ApiUrl"));
-            });
-            return services;
-        }
+        //public static IServiceCollection AddApiClient(this IServiceCollection services, IConfiguration configuration)
+        //{
+        //    services.AddHttpClient<IHTTPClientHelper, HTTPClientWrapper>(client =>
+        //    {
+        //        client.BaseAddress = new Uri(configuration.GetValue<string>("ConfigurationSettings:ApiUrl"));
+        //    });
+        //    return services;
+        //}
 
         //public static IServiceCollection AddDRXAuthentication(this IServiceCollection services, IConfiguration configuration) {
         //    services.AddHttpClient<IAuthentication, Authentication>(client => {

@@ -1,16 +1,19 @@
 ﻿using BusinessLogic.IService;
-using Common.Helper;
 using Model.Models;
-using System.Threading.Tasks;
 
-namespace BusinessLogic
+namespace BusinessLogic.Service
 {
     public class HomeService : IHomeService
     {
         //private readonly IHomeDALService _homeDalService;
 
+        //public HomeService()
+        //{
+
+        //}
+
         #region Home
-        public async Task<WeatherForecast> CallApiMethodAsync()
+        public WeatherForecast CallApiMethodAsync()
         {
             //string url = "https://localhost:44306/weatherforecast";
             //var result = await _httpClient.GetAsync<WeatherForecast>(url);

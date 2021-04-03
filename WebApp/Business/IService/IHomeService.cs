@@ -8,6 +8,6 @@ namespace BusinessLogic.IService
 {
     public interface IHomeService
     {
-        Task<WeatherForecast> CallApiMethodAsync();
+        WeatherForecast CallApiMethodAsync();
     }
 }
